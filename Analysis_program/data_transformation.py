@@ -1,5 +1,6 @@
 # Importing required libraries
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import OrdinalEncoder
 import pandas as pd
 
 
@@ -31,14 +32,43 @@ def numerical_scaling(df, inputs, writer):
     return df
 
 
-def data_preprocess(df, inputs, writer):
+def label_encode(df, inputs, writer):
+    columns = inputs['ordinal_features']
 
+    # Label encode
+    ordinal = OrdinalEncoder()
+    encoded_columns = ['Encoded_'+_ for _ in columns]
+    encoded_df = pd.DataFrame(ordinal.fit_transform(df[columns]), columns=encoded_columns)
+    df = df.merge(encoded_df, left_index=True, right_index=True)
+    df.drop(columns, axis=1, inplace=True)
+    writer.write_report(f'Label encoded the features {columns}')
+    return df
+
+
+def one_hot_encode(df, inputs, writer):
+    columns = inputs['nominal_features']
+
+    # One-hot encoding the nominal categorical variables
+    dummies_df = pd.get_dummies(df[columns])
+    df = df.merge(dummies_df, left_index=True, right_index=True)
+    df.drop(columns, axis=1, inplace=True)
+    writer.write_report(f'One-hot encoded the features {columns}')
+    return df
+
+
+def data_preprocess(df, inputs, writer):
     # Remove the unwanted features
     if 'features_to_drop' in inputs:
         df = remove_features(df, inputs, writer)
 
     # Scaling the numerical features
     df = numerical_scaling(df, inputs, writer)
+
+    # Encoding the ordinal categorical features
+    df = label_encode(df, inputs, writer)
+
+    # One-hot encoding the nominal categorical features
+    df = one_hot_encode(df, inputs, writer)
 
     return df
 
