@@ -1,6 +1,6 @@
 # Importing the libraries
 from read_write_files import read_inputs, read_dataset, ReportWriter
-from data_transformation import impute_central_tendency
+from data_transformation import impute_central_tendency, data_preprocess
 
 if __name__ == "__main__":
     # Create instance for report writing
@@ -11,9 +11,18 @@ if __name__ == "__main__":
     writer.write_report(inputs)
 
     # Read dataset
-    df = read_dataset(inputs['dataset'], inputs['delimiter'])
+    df = read_dataset(inputs)
+
+    # Preprocessing the data
+    # Preprocessing before imputation and splitting will reduce the runtime
+    df = data_preprocess(df, inputs, writer)
+    print(df.head())
 
     # Impute with central tendency and create three set of dataframe
-    df_mean, df_median, df_mode = impute_central_tendency(df, inputs['impute_column'], writer)
+    df_mean, df_median, df_mode = impute_central_tendency(df, inputs, writer)
+
+    print(df_mean.Age[5])
+    print(df_median.Age[5])
+    print(df_mode.Age[5])
 
     writer.file_close()

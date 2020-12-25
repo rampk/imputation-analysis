@@ -1,3 +1,9 @@
+run_by=Ramprakash
 dataset=titanic.csv
 delimiter=,
 impute_column=Age
+features_to_drop=PassengerId,Name,Ticket
+ordinal_features=Sex
+nominal_features=Embarked
+numerical_cat=Pclass,SibSp,Parch
+target_variable=Survived

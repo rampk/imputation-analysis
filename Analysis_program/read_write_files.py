@@ -29,11 +29,34 @@ class ReportWriter:
 def read_inputs():
     with open('input.txt', 'r') as file:
         inputs = {i.split('=')[0]: i.split('=')[1].strip() for i in file.readlines()}
-        return inputs
+
+    if inputs['features_to_drop'] != 'NA':
+        inputs['features_to_drop'] = inputs['features_to_drop'].split(',')
+    else:
+        del inputs['features_to_drop']
+
+    if inputs['ordinal_features'] != 'NA':
+        inputs['ordinal_features'] = inputs['ordinal_features'].split(',')
+    else:
+        del inputs['ordinal_features']
+
+    if inputs['nominal_features'] != 'NA':
+        inputs['nominal_features'] = inputs['nominal_features'].split(',')
+    else:
+        del inputs['nominal_features']
+
+    if inputs['numerical_cat'] != 'NA':
+        inputs['numerical_cat'] = inputs['numerical_cat'].split(',')
+    else:
+        del inputs['numerical_cat']
+
+    return inputs
 
 
 # Reading the dataset
-def read_dataset(dataset, delimiter):
+def read_dataset(inputs):
+    dataset = inputs['dataset']
+    delimiter = inputs['delimiter']
     extension = dataset.split('.')[1]
     file_name = '../Data/' + dataset
 
