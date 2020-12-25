@@ -19,7 +19,6 @@ def numerical_scaling(df, inputs, writer):
         columns = [_ for _ in columns if _ not in inputs['numerical_cat']]
 
     columns.remove(inputs['target_variable'])
-    columns.remove(inputs['impute_column'])
 
     # Scaling the numerical variables
     scaler = MinMaxScaler((0, 5))
@@ -28,6 +27,7 @@ def numerical_scaling(df, inputs, writer):
     scaled_df = pd.DataFrame(scaler.fit_transform(df[columns]), columns=scaled_columns)
     df = df.merge(scaled_df, left_index=True, right_index=True)
     df.drop(columns, axis=1, inplace=True)
+    df.rename(columns={'Scaled_'+inputs['impute_column']: inputs['impute_column']}, inplace=True)
     writer.write_report(f'Scaled the features {columns}')
     return df
 
