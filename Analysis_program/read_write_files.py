@@ -6,12 +6,12 @@ import re
 
 # Write a report
 class ReportWriter:
-    def __init__(self):
+    def __init__(self, run_by):
         # Generate a current report name
         def current_file_name():
             last_file = sorted(listdir('../Analysis_steps_performed'))[-1]
             current_report_num = int((re.findall(r'\d+', last_file)[0])) + 1
-            return f'../Analysis_steps_performed/Program_run-{current_report_num}.txt'
+            return f'../Analysis_steps_performed/{run_by}_program_run_{current_report_num}.txt'
 
         self.file_name = current_file_name()
         # Open the file cursor for writing

@@ -4,11 +4,12 @@ from data_transformation import impute_central_tendency, data_preprocess
 from evaluation_modelling import perform_analysis
 
 if __name__ == "__main__":
-    # Create instance for report writing
-    writer = ReportWriter()
 
     # Read inputs
     inputs = read_inputs()
+
+    # Create instance for report writing
+    writer = ReportWriter(inputs['run_by'])
     writer.write_report(inputs)
 
     # Read dataset
