@@ -7,3 +7,4 @@ ordinal_features=Sex
 nominal_features=Embarked
 numerical_cat=Pclass,SibSp,Parch
 target_variable=Survived
+regression=False
