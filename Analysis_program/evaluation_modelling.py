@@ -1,4 +1,5 @@
 # Importing the required libraries
+from presenting_evaluation import present_evaluation
 from sklearn.model_selection import StratifiedShuffleSplit
 import pandas as pd
 # Machine Learning algorithms
@@ -19,6 +20,7 @@ class Metrics:
         if regression == 'True':
             pass
         else:
+            self.regression = False
             self.mean = {'RandomForest': {'Accuracy': [], 'AUC': [], 'Precision': [], 'Recall': [], 'F1': []},
                          'LogisticRegression': {'Accuracy': [], 'AUC': [], 'Precision': [], 'Recall': [], 'F1': []},
                          'KNeighbors': {'Accuracy': [], 'AUC': [], 'Precision': [], 'Recall': [], 'F1': []},
@@ -127,6 +129,7 @@ def perform_analysis(df_mean, df_median, df_mode, inputs, writer):
         mode_temp = evaluate_performance(train_mode, test_mode, train_y, test_y, inputs)
         metrics.add_results(mode_temp, 'mode')
 
-    print(metrics.mean)
-    print(metrics.median)
-    print(metrics.mode)
+    present_evaluation(metrics)
+    #print(metrics.mean)
+    #print(metrics.median)
+    #print(metrics.mode)
