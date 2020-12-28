@@ -1,6 +1,7 @@
 # Importing the required libraries
 from presenting_evaluation import present_evaluation
 from read_write_files import document_performance
+from visualize_metrics import visualize_performance
 from sklearn.model_selection import StratifiedShuffleSplit
 import pandas as pd
 # Machine Learning algorithms
@@ -67,7 +68,8 @@ def evaluate_performance(train_data, test_data, train_label, test_label, inputs)
         pass
     else:
         # Train RandomForest algorithm
-        rf = RandomForestClassifier()
+        # Using random state to get reproducible results
+        rf = RandomForestClassifier(random_state=42)
         rf.fit(train_data, train_label)
         results['RandomForest'] = test_performance(rf, test_data, test_label)
 
@@ -132,3 +134,4 @@ def perform_analysis(df_mean, df_median, df_mode, inputs, writer):
 
     document_performance(metrics, inputs['run_by'], writer.current_num)
     present_evaluation(metrics, inputs, writer)
+    visualize_performance(metrics, inputs, writer)

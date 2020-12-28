@@ -56,4 +56,3 @@ def present_evaluation(metrics, inputs, writer):
 
     metrics_df.sort_values(by=['Algorithm'], inplace=True)
     write_performance(metrics_df, inputs['run_by'], writer.current_num)
-    print(metrics_df.head())

@@ -3,6 +3,7 @@ from zipfile import ZipFile
 import pandas as pd
 import re
 import os
+import shutil
 
 
 # Write a report
@@ -83,14 +84,21 @@ def write_performance(df, run_by, current_num):
 
 
 def zip_results(run_by, current_num):
-    file_name = f'../Results/{run_by}_analysis_results_{current_num}.zip'
+    file_name = f'../Results/{run_by}_analysis_results_{current_num}'
     performance_csv = f'../Results/Performance/{run_by}_performance_results_{current_num}.csv'
     performance_txt = f'../Results/Performance/{run_by}_performance_results_{current_num}.txt'
     steps = f'../Analysis_steps_performed/{run_by}_program_run_{current_num}.txt'
-    input_file = f'{run_by}_input_{current_num}.txt'
+    images = f'../Results/Images/{run_by}_images_{current_num}/'
 
-    with ZipFile(file_name, 'w') as zip_file:
-        zip_file.write(performance_csv, os.path.basename(performance_csv))
-        zip_file.write(performance_txt, os.path.basename(performance_txt))
-        zip_file.write(steps, os.path.basename(steps))
-        zip_file.write('input.txt', input_file)
+    dir_name = f'../Results/{run_by}_analysis_results_{current_num}'
+    dir_image = f'{dir_name}/images'
+    os.makedirs(dir_name)
+
+    shutil.copy('input.txt', dir_name)
+    shutil.copy(performance_csv, dir_name)
+    shutil.copy(performance_txt, dir_name)
+    shutil.copy(steps, dir_name)
+    shutil.copytree(images, dir_image)
+
+    shutil.make_archive(file_name, 'zip', dir_name)
+    shutil.rmtree(dir_name)
