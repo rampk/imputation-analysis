@@ -1,5 +1,6 @@
 # Importing the required libraries
 from presenting_evaluation import present_evaluation
+from read_write_files import document_performance
 from sklearn.model_selection import StratifiedShuffleSplit
 import pandas as pd
 # Machine Learning algorithms
@@ -129,7 +130,5 @@ def perform_analysis(df_mean, df_median, df_mode, inputs, writer):
         mode_temp = evaluate_performance(train_mode, test_mode, train_y, test_y, inputs)
         metrics.add_results(mode_temp, 'mode')
 
-    present_evaluation(metrics)
-    #print(metrics.mean)
-    #print(metrics.median)
-    #print(metrics.mode)
+    document_performance(metrics, inputs['run_by'], writer.current_num)
+    present_evaluation(metrics, inputs, writer)

@@ -1,0 +1,20 @@
+{'run_by': 'Ramprakash', 'dataset': 'titanic.csv', 'delimiter': ',', 'impute_column': 'Age', 'features_to_drop': ['PassengerId', 'Name', 'Ticket'], 'ordinal_features': ['Sex'], 'nominal_features': ['Embarked'], 'numerical_cat': ['Pclass', 'SibSp', 'Parch'], 'target_variable': 'Survived', 'regression': 'False'}
+
+Removed the features ['PassengerId', 'Name', 'Ticket']
+
+Scaled the features ['Age', 'Fare']
+
+Label encoded the features ['Sex']
+
+One-hot encoded the features ['Embarked']
+
+Total records = 891
+Null records = 177
+Percentage of null = 0.19865319865319866
+
+
+mean = 1.8396027674703967
+median = 1.7328474491078159
+mode = 1.4815280221161093
+
+

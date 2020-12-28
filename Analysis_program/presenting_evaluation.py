@@ -1,9 +1,10 @@
 # Importing the required libraries
+from read_write_files import write_performance
 import numpy as np
 import pandas as pd
 
 
-def present_evaluation(metrics):
+def present_evaluation(metrics, inputs, writer):
 
     if metrics.regression:
         pass
@@ -54,5 +55,5 @@ def present_evaluation(metrics):
             metrics_df = metrics_df.append(metrics_dict, ignore_index=True)
 
     metrics_df.sort_values(by=['Algorithm'], inplace=True)
-    metrics_df.to_csv('../Results/performance.csv', index=False)
+    write_performance(metrics_df, inputs['run_by'], writer.current_num)
     print(metrics_df.head())
